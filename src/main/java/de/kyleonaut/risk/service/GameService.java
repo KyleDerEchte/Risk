@@ -27,7 +27,10 @@ public class GameService {
         this.currentGame = Game.create();
         startGameStateUpdater(plugin);
     }
-
+    /*
+    * Maybe move this to the game instance itself ?
+    *
+    * */
     private void startGameStateUpdater(RiskPlugin plugin) {
         final GameStateWrapper gameStateWrapper = new GameStateWrapper(this.getCurrentGameState(), 0);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
