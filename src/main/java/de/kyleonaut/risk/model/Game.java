@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,15 +14,5 @@ import java.util.UUID;
 public class Game {
     private UUID uuid;
     private List<Participant> participants;
-    private GameState state;
-
-    public static Game create() {
-        return new Game(UUID.randomUUID(), new ArrayList<>(), GameState.IDLE);
-    }
-
-    public enum GameState {
-        IDLE,
-        RUNNING,
-        DONE
-    }
+    private State state;
 }
