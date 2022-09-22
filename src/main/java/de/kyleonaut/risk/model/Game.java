@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,10 +16,13 @@ public class Game {
     private List<Participant> participants;
     private GameState state;
 
+    public static Game create() {
+        return new Game(UUID.randomUUID(), new ArrayList<>(), GameState.IDLE);
+    }
+
     public enum GameState {
-        STARTING, //10 seconds
-        RUNNING, //up to 10 seconds
-        ENDING, //10 seconds
-        ENDED // 1/20 second - just a state a game ended.
+        IDLE,
+        RUNNING,
+        DONE
     }
 }
