@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class RiskPlugin extends JavaPlugin {
     @Getter
     private Injector injector;
+    private int visualizerTask;
 
     @Override
     public void onEnable() {
@@ -24,11 +25,12 @@ public class RiskPlugin extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(this.injector.getInstance(Area3DCreateListener.class), this);
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.injector.getInstance(Area3DVisualizer.class)
-        , 0, 5);
+        this.visualizerTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this,
+                this.injector.getInstance(Area3DVisualizer.class), 0, 5);
     }
 
     @Override
     public void onDisable() {
+        Bukkit.getScheduler().cancelTask(this.visualizerTask);
     }
 }
