@@ -11,13 +11,13 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Area3D implements Serializable {
-    private int minX;
-    private int minY;
-    private int minZ;
+    private double minX;
+    private double minY;
+    private double minZ;
 
-    private int maxX;
-    private int maxY;
-    private int maxZ;
+    private double maxX;
+    private double maxY;
+    private double maxZ;
 
     private String world;
 
@@ -39,19 +39,19 @@ public class Area3D implements Serializable {
     public List<Coordinate> getOutlines() {
         final List<Coordinate> coordinates = new ArrayList<>();
 
-        for (int x = this.minX; x < this.maxX; x++) {
+        for (double x = this.minX; x < this.maxX; x+=0.5) {
             coordinates.add(new Coordinate(x, this.minY, this.minZ, this.world));
             coordinates.add(new Coordinate(x, this.maxY, this.minZ, this.world));
             coordinates.add(new Coordinate(x, this.minY, this.maxZ, this.world));
             coordinates.add(new Coordinate(x, this.maxY, this.maxZ, this.world));
         }
-        for (int y = this.minY; y < this.maxY; y++) {
+        for (double y = this.minY; y < this.maxY; y+=0.5) {
             coordinates.add(new Coordinate(this.minX, y, this.minZ, this.world));
             coordinates.add(new Coordinate(this.maxX, y, this.minZ, this.world));
             coordinates.add(new Coordinate(this.minX, y, this.maxZ, this.world));
             coordinates.add(new Coordinate(this.maxX, y, this.maxZ, this.world));
         }
-        for (int z = this.minZ; z < this.maxZ; z++) {
+        for (double z = this.minZ; z < this.maxZ; z+=0.5) {
             coordinates.add(new Coordinate(this.minX, this.minY, z, this.world));
             coordinates.add(new Coordinate(this.maxX, this.minY, z, this.world));
             coordinates.add(new Coordinate(this.minX, this.maxY, z, this.world));

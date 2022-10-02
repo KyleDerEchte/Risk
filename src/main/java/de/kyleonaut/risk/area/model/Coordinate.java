@@ -14,13 +14,13 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Coordinate {
-    private int x;
-    private int y;
-    private int z;
+    private double x;
+    private double y;
+    private double z;
     private String worldName;
 
     public static Coordinate of(Location location) {
-        return new Coordinate(location.getBlockX(), location.getBlockY(), location.getBlockZ(), Objects.requireNonNull(location.getWorld()).getName());
+        return new Coordinate(location.getX() + 0.5, location.getY() + 0.5, location.getZ() + 0.5, Objects.requireNonNull(location.getWorld()).getName());
     }
 
     public Location toBukkitLocation() {
