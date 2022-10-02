@@ -1,21 +1,34 @@
 package de.kyleonaut.risk;
 
-import de.kyleonaut.risk.holder.CurrentGameHolder;
-import de.kyleonaut.risk.manager.GameLoopManager;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import de.kyleonaut.risk.area.listener.Area3DCreateListener;
+import de.kyleonaut.risk.area.repository.Area3DRepository;
+import de.kyleonaut.risk.area.task.Area3DVisualizer;
+import de.kyleonaut.risk.module.RiskModule;
+import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class RiskPlugin extends JavaPlugin {
-    private GameLoopManager gameLoopManager;
+    @Getter
+    private Injector injector;
 
     @Override
     public void onEnable() {
-        final CurrentGameHolder currentGameHolder = new CurrentGameHolder();
-        this.gameLoopManager = new GameLoopManager(this, currentGameHolder);
-        this.gameLoopManager.start();
+        RiskModule riskModule = new RiskModule(this);
+        this.injector = Guice.createInjector(riskModule);
+        this.injector.injectMembers(this);
+
+        this.injector.getInstance(Area3DRepository.class).load();
+
+        Bukkit.getPluginManager().registerEvents(this.injector.getInstance(Area3DCreateListener.class), this);
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.injector.getInstance(Area3DVisualizer.class)
+        , 0, 5);
     }
 
     @Override
     public void onDisable() {
-        this.gameLoopManager.stop();
     }
 }
